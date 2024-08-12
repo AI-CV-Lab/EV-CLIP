@@ -167,11 +167,11 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 ### Model Zoo
 
 ---
+Download the weight, and save it to the corresponding directory.
+
+ex) ~/EVoCLIP/output/ucf101_video_vifi/EVoCLIP/omniS_vit_b16_8frames_8shots/EVO_True_CoOp_False/encoder_768/decBoth/aggregation_mean_pool/seed1/model/model-best.pth.tar
 
 **UCF101**
-
-Download the weight, and save it to the corresponding directory.
-ex) ~/EVoCLIP/output/ucf101_video_vifi/EVoCLIP/omniS_vit_b16_8frames_8shots/EVO_True_CoOp_True/encoder_768/decBoth/aggregation_mean_pool/seed1/model/model-best.pth.tar
 
 | VM \ CLIP | ViT-B/16 |
 | --- | --- |

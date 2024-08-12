@@ -20,7 +20,7 @@ TEMPORAL_AGGREGATION=$8
 # OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 for SEED in 1
 do
-    DIR=output/${DATASET}/${TRAINER}/${CFG}_${FRAME}frames_${SHOTS}shots/EVO_True_CoOp_True/encoder_${ENC_OUT_DIM}/dec${DECODER}/aggregation_${TEMPORAL_AGGREGATION}/seed${SEED}
+    DIR=output/${DATASET}/${TRAINER}/${CFG}_${FRAME}frames_${SHOTS}shots/EVO_True_CoOp_False/encoder_${ENC_OUT_DIM}/dec${DECODER}/aggregation_${TEMPORAL_AGGREGATION}/seed${SEED}
     if [ -d "$DIR" ]; then
         echo "Oops! The results exist at ${DIR} (so skip this job)"
     else

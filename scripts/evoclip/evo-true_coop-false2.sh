@@ -20,7 +20,7 @@ TEMPORAL_AGGREGATION=$8
 
 for SEED in 1 2
 do
-    DIR=output/${DATASET}/${TRAINER}/${CFG}_${FRAME}frames_${SHOTS}shots/EVO_True_CoOp_True/encoder_${ENC_OUT_DIM}/dec${DECODER}/aggregation_${TEMPORAL_AGGREGATION}/seed${SEED}
+    DIR=output/${DATASET}/${TRAINER}/${CFG}_${FRAME}frames_${SHOTS}shots/EVO_True_CoOp_False/encoder_${ENC_OUT_DIM}/dec${DECODER}/aggregation_${TEMPORAL_AGGREGATION}/seed${SEED}
     if [ -d "$DIR" ]; then
         echo "Oops! The results exist at ${DIR} (so skip this job)"
     else
