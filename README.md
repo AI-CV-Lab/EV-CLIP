@@ -54,6 +54,23 @@ Description will be provided.
     ```
     
 
+### 2. Prepare the datasets
+
+- **UCF101**
+    
+    For the identical shot settings, download the shot lists [here](https://github.com/muzairkhattak/ViFi-CLIP/tree/main/datasets_splits/ucf_splits) and save them with making a new directory. The location of this directory should be applied to ***self.split_path*** variable in “*~/EVoCLIP/datasets/ucf101_video_vifi.py*” before starting the training.
+    
+    [Download Link](https://www.crcv.ucf.edu/data/UCF101.php)
+    
+- **ARID**
+    
+    [Download Link](https://xuyu0010.github.io/arid.html#papers-and-download)
+    
+- **EGTEA Gaze+**
+    
+    [Download Link](https://cbs.ic.gatech.edu/fpv/)
+    
+
 ### Train
 
 ---
@@ -127,7 +144,7 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
     
 3. **Dataset**
     
-    Available Dataset List: ucf101_vifi, arid, egtea
+    Available Dataset List: ucf101_video_vifi, arid, egtea
     
     - ucf101_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
     - arid: Train for the two splits of ARID dataset, which features dark scene conditions.
@@ -146,6 +163,32 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
     
     ex) 2, 4, 8, 16, …
     
+
+### Model Zoo
+
+---
+
+**UCF101**
+
+| VM \ CLIP | ViT-B/16 |
+| --- | --- |
+| Omnivore-Small | https://drive.google.com/drive/folders/1E7hJlBUIIw27VKzX_S-CjdnzlstC2Pfi?usp=drive_link |
+
+**ARID**
+
+| VM \ CLIP | ResNet50 | ResNet101 | ViT-B/32 | ViT-B/16 | ViT-L/14 |
+| --- | --- | --- | --- | --- | --- |
+| Omnivore-Tiny | - | - | - | https://drive.google.com/drive/folders/1m-gbrZuIGhGkHuZZC76mb-i0W9m4RTaN?usp=drive_link | - |
+| Omnivore-Small | https://drive.google.com/drive/folders/1qWPKn16Rrc2-JkbEHmy57AIMGDwNocHA?usp=drive_link | https://drive.google.com/drive/folders/1ZdwCXLnVAXnrfRMbYzJ99w2snFn4IClY?usp=drive_link | https://drive.google.com/drive/folders/1X7SVSxRSCdOQRCivB8GVZmx7Q5Zef-lX?usp=drive_link | https://drive.google.com/drive/folders/1Y9bf9H--OsXCcCOn8bWR0P6bzBMKDEW3?usp=drive_link | https://drive.google.com/drive/folders/1c_eoEMZ3fZmb72UL8GmUJQXTMq2BQW-a?usp=drive_link |
+| Omnivore-Base | - | - | - | https://drive.google.com/drive/folders/1CrakfWlHgHyRyN3cCBPgOmTVVRVDESiu?usp=drive_link | - |
+
+**EGTEA**
+
+| VM \ CLIP | ResNet50 | ResNet101 | ViT-B/32 | ViT-B/16 | ViT-L/14 |
+| --- | --- | --- | --- | --- | --- |
+| Omnivore-Tiny | - | - | - | https://drive.google.com/drive/folders/15YqZefGH0587JSUpQdR6qhLLb7NL4czO?usp=drive_link | - |
+| Omnivore-Small | https://drive.google.com/drive/folders/1c8bKY5jXRW1Rmmokeyu0ef2PyEwj4JDl?usp=drive_link | https://drive.google.com/drive/folders/1wlrcDd-_RyullPSlxlIOSdDTmKgcffsL?usp=drive_link | https://drive.google.com/drive/folders/1DJR1Xcjat4GiRe8Sd7oPqhiJ-mca4-hX?usp=drive_link | https://drive.google.com/drive/folders/1CL4cojC_SRFb6-pPdii-hhZTY6O6HA8T?usp=drive_link | https://drive.google.com/drive/folders/1lcQfxVMp6W6SvfwqBcGG8c4Otv8BbBZB?usp=drive_link |
+| Omnivore-Base | - | - | - | https://drive.google.com/drive/folders/1gXKrhydQ511Ly8_I8Tw2d94ziOWLcgU5?usp=drive_link | - |
 
 ### Acknowledgements
 
