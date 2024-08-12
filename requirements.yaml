@@ -1,0 +1,12 @@
+name: evoclip
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - torchtext=0.14.1
+  - tqdm=4.64.1
+  - yaml=0.2.5
+  - wheel=0.37.1
+  - ffmpeg=4.3

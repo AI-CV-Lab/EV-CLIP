@@ -1,0 +1,55 @@
+DATALOADER:
+  TRAIN_X:
+    BATCH_SIZE: 16
+  TEST:
+    BATCH_SIZE: 50
+  NUM_WORKERS: 20
+
+INPUT:
+  TASK: "video"
+  TYPE: "tensor"
+  CLIP_PREPROCESS: False
+  EXPAND_TRAIN: (256, 340)
+  EXPAND_TEST: (256, 340)
+  SIZE: (224, 224)
+  WHOLE_FRAMES: 16
+  FRAMES: 16
+  INTERPOLATION: "bicubic"
+  TRANSFORMS: ["normalize_video"]
+  PIXEL_MEAN: [0.485, 0.456, 0.406] # [0.00262479, 0.00262479, 0.00262479] # 0.0026247948526334362
+  PIXEL_STD: [0.229, 0.224, 0.225] # [0.0443, 0.0443, 0.0443]
+
+OPTIM:
+  NAME: "sgd"
+  LR: 0.002
+  MAX_EPOCH: 100
+  LR_SCHEDULER: "cosine"
+  WARMUP_EPOCH: 1
+  WARMUP_TYPE: "constant"
+  WARMUP_CONS_LR: "1e-5"
+
+TRAIN:
+  PRINT_FREQ: 5
+  VALIDATION_FREQ: 5
+
+TEST:
+  FINAL_MODEL: "best_val"  # last_step / best_val
+  EVALUATOR: "Classification"
+  CLIP: 5
+
+MODEL:
+  EVO:
+    ENABLE: True
+    ENC_OUT_DIM: 128
+    DEC_TYPE: "Both"
+    ENC_NAME: "encoder"
+    ACT: "gelu"
+    BIAS: False
+    PROMPT_INIT: "random"
+  BACKBONE:
+    IMAGE:
+      NAME: "ViT-B/16"
+  TEMPORAL: "mean_pool" # mean_pool, temporal_attention
+
+DATASET:
+  PROMPT: 'a photo of a _.'

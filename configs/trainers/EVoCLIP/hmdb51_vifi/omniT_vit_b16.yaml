@@ -1,0 +1,60 @@
+DATALOADER:
+  TRAIN_X:
+    BATCH_SIZE: 64
+  TEST:
+    BATCH_SIZE: 64
+  NUM_WORKERS: 16
+
+INPUT:
+  TASK: "video"
+  TYPE: "tensor"
+  CLIP_PREPROCESS: False
+  EXPAND_TRAIN: (256, 340)
+  EXPAND_TEST: (256, 340)
+  SIZE: (224, 224)
+  WHOLE_FRAMES: 32
+  FRAMES: 8
+  INTERPOLATION: "bicubic"
+  TRANSFORMS: ["normalize_video"]
+  PIXEL_MEAN: [0.485, 0.456, 0.406] # [0.00262479, 0.00262479, 0.00262479] # 0.0026247948526334362
+  PIXEL_STD: [0.229, 0.224, 0.225] # [0.0443, 0.0443, 0.0443]
+
+OPTIM:
+  NAME: "adamw"
+  LR: 4e-4
+  MAX_EPOCH: 500
+  LR_SCHEDULER: "cosine"
+  WARMUP_EPOCH: 1
+  WARMUP_TYPE: "constant"
+  WARMUP_CONS_LR: "2e-5"
+  WEIGHT_DECAY: 0.05
+
+TRAIN:
+  PRINT_FREQ: 6
+  VALIDATION_FREQ: 5
+
+TEST:
+  FINAL_MODEL: "best_val"  # last_step / best_val
+  EVALUATOR: "Classification_TopK"
+  SPLIT: "val"
+  TOPK: 5
+  CLIP: 1
+  CROP: 3
+
+MODEL:
+  EVO:
+    ENABLE: True
+    ENC_OUT_DIM: 768
+    DEC_TYPE: "Both"
+    ENC_NAME: "omnivore_swinT"
+    ACT: "gelu"
+    BIAS: False
+    PROMPT_INIT: "random"
+    SPATIAL_IR: True
+  BACKBONE:
+    IMAGE:
+      NAME: "ViT-B/16"
+  TEMPORAL: "mean_pool" # mean_pool, temporal_attention
+
+DATASET:
+  PROMPT: 'A video of _.'
