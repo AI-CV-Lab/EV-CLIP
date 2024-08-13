@@ -32,7 +32,7 @@ Description will be provided.
     conda env update -f requirements.yaml
     
     # pip install the requirements.txt
-    pip install -r evoclip.txt
+    pip install -r requirements.txt
     ```
     
 3. **CLIP**
