@@ -4,7 +4,7 @@ numpy==1.23.0
 pillow==9.3.0
 einops==0.6.1
 ftfy==6.1.1
-fvcore==0.1.5
+fvcore==0.1.5.post20221221
 regex==2023.8.8
 rsa==4.9
 scipy==1.11.2

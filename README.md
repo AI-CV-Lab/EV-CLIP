@@ -28,9 +28,6 @@ Description will be provided.
     # Install Pytorch
     pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
     
-    # overlay the requirements.yaml
-    conda env update -f requirements.yaml
-    
     # pip install the requirements.txt
     pip install -r requirements.txt
     ```
@@ -129,7 +126,11 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
 ---
 
 ```bash
-# Evaluate the trained model.
+# Evaluate the downloaded model.
+# path example) "output/ucf101" for "~/EVoCLIP/output/ucf101/model/model-best.pth.tar
+sh ./scripts/evoclip/eval_downloaded.sh 0 arid omniS_vit_b16 8 "path" 4
+
+# Evaluate the model which you trained by yourself.
 sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 ```
 
@@ -167,9 +168,7 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 ### Model Zoo
 
 ---
-Download the weight, and save it to the corresponding directory.
-
-ex) ~/EVoCLIP/output/ucf101_video_vifi/EVoCLIP/omniS_vit_b16_8frames_8shots/EVO_True_CoOp_False/encoder_768/decBoth/aggregation_mean_pool/seed1/model/model-best.pth.tar
+Download the weights for the trained models. Make a directory such as "~/weights", and save the weight as "~/weights/model/model-best.pth.tar". The evaluation should be conducted using "eval_downloaded.sh", with the path "~/weights".
 
 **UCF101**
 

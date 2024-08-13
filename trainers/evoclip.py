@@ -283,7 +283,7 @@ class CustomCLIP(nn.Module):
 
     def forward(self, video):
 
-        if self.hl_enable:
+        if self.evo_enable:
             if self.prompt_dec_type in self.temporal_including_dec_types:
                 video, temporal = self.image_prompt_learner(video)    # Spatially Masked Video, Temporal Mask (B, T, 512)
             else:
