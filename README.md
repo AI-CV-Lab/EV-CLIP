@@ -168,7 +168,7 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 ### Model Zoo
 
 ---
-Download the weights for the trained models. Make a directory such as "~/weights", and save the weight as "~/weights/model/model-best.pth.tar". The evaluation should be conducted using "eval_downloaded.sh", with the path "~/weights".
+Download the weights for the trained models. Make a directory such as "EVoCLIP/weights/ucf101", and save the weight as "EVoCLIP/weights/ucf101/model/model-best.pth.tar". The evaluation should be conducted using "eval_downloaded.sh", with the path "weights/ucf101".
 
 **UCF101**
 
