@@ -94,7 +94,7 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
     
     Available Dataset List: ucf101_vifi, arid, egtea
     
-    - ucf101_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
+    - ucf101_video_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
     - arid: Train for the two splits of ARID dataset, which features dark scene conditions.
     - egtea: Train for the three splits of EGTEA Gaze+ dataset, which features egocentric viewpoints.
 4. **Config File**
@@ -114,10 +114,12 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
 7. **The channel dimension size extracted from the video model.**
     - Omni-Tiny , Omni-Small: 768
     - Omni-Base: 1024
+
 8. **Prompt Choice**
     - Mask : only the mask prompt
     - Context : only the context prompt
     - Both : both prompts
+
 9. **Temporal Aggregation**
     - “***mean_pool***” is the only and defualt setting.
 
@@ -127,8 +129,8 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
 
 ```bash
 # Evaluate the downloaded model.
-# path example) "output/ucf101" for "~/EVoCLIP/output/ucf101/model/model-best.pth.tar
-sh ./scripts/evoclip/eval_downloaded.sh 0 arid omniS_vit_b16 8 "path" 4
+# path example) "output/ucf101" for "~/EVoCLIP/output/ucf101/seed1/model/model-best.pth.tar
+sh ./scripts/evoclip/eval_downloaded.sh 0 arid omniS_vit_b16 8 4 "path"
 
 # Evaluate the model which you trained by yourself.
 sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
@@ -139,6 +141,7 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
     Before you start the evaluation, you should set the iteration number for each dataset in the file.
     
     - eval.sh
+    
 2. **GPU**
     
     Set your GPU(Cuda) number to use for training.
@@ -147,9 +150,10 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
     
     Available Dataset List: ucf101_video_vifi, arid, egtea
     
-    - ucf101_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
+    - ucf101_video_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
     - arid: Train for the two splits of ARID dataset, which features dark scene conditions.
     - egtea: Train for the three splits of EGTEA Gaze+ dataset, which features egocentric viewpoints.
+
 4. **Config File**
     
     Select a config file in “~/EVo-CLIP/configs/trainers/***dataset/filename.yaml***”.
@@ -163,7 +167,11 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 6. **The number of Shots**
     
     ex) 2, 4, 8, 16, …
+
+7. **The path of downloaded weights**
     
+    ex) "output/ucf101" for "~/EVoCLIP/output/ucf101/seed1/model/model-best.pth.tar
+
 
 ### Model Zoo
 
@@ -181,7 +189,7 @@ Download the weights for the trained models. Make a directory such as "EVoCLIP/w
 | VM \ CLIP | ResNet50 | ResNet101 | ViT-B/32 | ViT-B/16 | ViT-L/14 |
 | --- | --- | --- | --- | --- | --- |
 | Omnivore-Tiny | - | - | - | [Link](https://drive.google.com/drive/folders/1m-gbrZuIGhGkHuZZC76mb-i0W9m4RTaN?usp=drive_link) | - |
-| Omnivore-Small | [Link](https://drive.google.com/drive/folders/1qWPKn16Rrc2-JkbEHmy57AIMGDwNocHA?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1ZdwCXLnVAXnrfRMbYzJ99w2snFn4IClY?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1X7SVSxRSCdOQRCivB8GVZmx7Q5Zef-lX?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1Y9bf9H--OsXCcCOn8bWR0P6bzBMKDEW3?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1c_eoEMZ3fZmb72UL8GmUJQXTMq2BQW-a?usp=drive_link) |
+| Omnivore-Small | [Link](https://drive.google.com/drive/folders/1qWPKn16Rrc2-JkbEHmy57AIMGDwNocHA?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1ZdwCXLnVAXnrfRMbYzJ99w2snFn4IClY?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1X7SVSxRSCdOQRCivB8GVZmx7Q5Zef-lX?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1Y9bf9H--OsXCcCOn8bWR0P6bzBMKDEW3?usp=sharing) | [Link](https://drive.google.com/drive/folders/1c_eoEMZ3fZmb72UL8GmUJQXTMq2BQW-a?usp=drive_link) |
 | Omnivore-Base | - | - | - | [Link](https://drive.google.com/drive/folders/1CrakfWlHgHyRyN3cCBPgOmTVVRVDESiu?usp=drive_link) | - |
 
 **EGTEA**

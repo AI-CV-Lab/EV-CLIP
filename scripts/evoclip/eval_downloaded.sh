@@ -11,7 +11,7 @@ DATASET=$2
 CFG=$3      # config file
 FRAME=$4
 SHOTS=$5    # number of shots (1, 2, 4, 8, 16) / full (-1)
-PATH=$6
+WEIGHT=$6
 EPOCH=$7    # load-epoch (null is best)
 
 for SEED in 1 2 3
@@ -24,7 +24,7 @@ do
         --dataset-config-file configs/datasets/${DATASET}.yaml \
         --config-file configs/trainers/${TRAINER}/${DATASET}/${CFG}.yaml \
         --output-dir output/evaluation/${TRAINER}/${DATASET}/${CFG}_${SHOTS}shots/seed${SEED} \
-        --model-dir ${PATH} \
+        --model-dir ${WEIGHT}/seed${SEED} \
         --load-epoch ${EPOCH} \
         --eval-only \
         SHOT_DIR "/home/Datasets" \
@@ -37,7 +37,7 @@ do
         --dataset-config-file configs/datasets/${DATASET}.yaml \
         --config-file configs/trainers/${TRAINER}/${DATASET}/${CFG}.yaml \
         --output-dir output/evaluation/${TRAINER}/${DATASET}/${CFG}_${SHOTS}shots/seed${SEED} \
-        --model-dir ${PATH} \
+        --model-dir ${WEIGHT}/seed${SEED} \
         --eval-only \
         SHOT_DIR "/home/Datasets" \
         DATASET.NUM_SHOTS ${SHOTS}
