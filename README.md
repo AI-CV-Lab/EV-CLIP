@@ -58,6 +58,12 @@ Description will be provided.
     For the identical shot settings, download the shot lists [here](https://github.com/muzairkhattak/ViFi-CLIP/tree/main/datasets_splits/ucf_splits) and save them with making a new directory. The location of this directory should be applied to ***self.split_path*** variable in “*~/EVoCLIP/datasets/ucf101_video_vifi.py*” before starting the training.
     
     [Download Link](https://www.crcv.ucf.edu/data/UCF101.php)
+
+- **HMDB51**
+    
+    For the identical shot settings, download the shot lists [here](https://github.com/muzairkhattak/ViFi-CLIP/tree/main/datasets_splits/hmdb_splits) and save them with making a new directory. The location of this directory should be applied to ***self.split_path*** variable in “*~/EVoCLIP/datasets/hmdb51_vifi.py*” before starting the training.
+    
+    [Download Link](https://serre-lab.clps.brown.edu/resource/hmdb-a-large-human-motion-database/#Downloads)
     
 - **ARID**
     
@@ -74,7 +80,7 @@ Description will be provided.
 
 ```bash
 # Train the model.
-sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both mean_pool
+sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both Consistency_Loss 0.1 mean_pool
 ```
 
 **Configs**
@@ -95,6 +101,7 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
     Available Dataset List: ucf101_vifi, arid, egtea
     
     - ucf101_video_vifi : Train for the first split of UCF101 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
+    - hmdb51_vifi : Train for the first split of HMDB51 dataset, using identical shot samples with [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP) and [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP).
     - arid: Train for the two splits of ARID dataset, which features dark scene conditions.
     - egtea: Train for the three splits of EGTEA Gaze+ dataset, which features egocentric viewpoints.
 4. **Config File**
@@ -120,7 +127,14 @@ sh ./scripts/evoclip/evo-true_coop-false2.sh 0 arid omniS_vit_b16 8 4 768 Both m
     - Context : only the context prompt
     - Both : both prompts
 
-9. **Temporal Aggregation**
+9. **Loss**
+    - Cross_Entropy: Cross Entropy Loss
+    - Consistency_Loss: Cross Entropy Loss + lambda*Consistency Loss
+
+10. **Lambda**
+    - Lambda value that controls the influence of the Consistency Loss
+
+11. **Temporal Aggregation**
     - “***mean_pool***” is the only and defualt setting.
 
 ### Evaluation
@@ -176,29 +190,42 @@ sh ./scripts/evoclip/eval.sh 0 arid omniS_vit_b16 8 4
 ### Model Zoo
 
 ---
-Download the weights for the trained models. Make a directory such as "EVoCLIP/weights/ucf101", and save the weight as "EVoCLIP/weights/ucf101/model/model-best.pth.tar". The evaluation should be conducted using "eval_downloaded.sh", with the path "weights/ucf101".
+Download the weights for the trained models. Each Model was trained on the first seed of respective dataset. Make a directory such as "EVoCLIP/weights/ucf101", and save the weight as "EVoCLIP/weights/ucf101/model/model-best.pth.tar". The evaluation should be conducted using "eval_downloaded.sh", with the path "weights/ucf101".
 
-**UCF101**
+**K400(Kinetics-400)**
+- Post-pretrained Zero-shot Model.
 
 | VM \ CLIP | ViT-B/16 |
 | --- | --- |
-| Omnivore-Small | [Link](https://drive.google.com/drive/folders/1E7hJlBUIIw27VKzX_S-CjdnzlstC2Pfi?usp=drive_link) |
+| Omnivore-Small | [Link](https://drive.google.com/file/d/1tizKBf8Ol0-K9OhlytRI4OiRblxy0l7E/view?usp=sharing) |
+
+**UCF101**
+- Few(eight)-shot Model.
+
+| VM \ CLIP | ViT-B/16 |
+| --- | --- |
+| Omnivore-Small | [Link](https://drive.google.com/file/d/1mrWH6_oTurb3OGBJ88BNQYfoBrqHbr6A/view?usp=sharing) |
+
+**HMDB51**
+- Few(eight)-shot Model.
+
+| VM \ CLIP | ViT-B/16 |
+| --- | --- |
+| Omnivore-Small | [Link](https://drive.google.com/file/d/1AD3skVlj6ERkqD5eSqhLoHh4AZQpztx9/view?usp=sharing) |
 
 **ARID**
+- Few(eight)-shot Model.
 
-| VM \ CLIP | ResNet50 | ResNet101 | ViT-B/32 | ViT-B/16 | ViT-L/14 |
-| --- | --- | --- | --- | --- | --- |
-| Omnivore-Tiny | - | - | - | [Link](https://drive.google.com/drive/folders/1m-gbrZuIGhGkHuZZC76mb-i0W9m4RTaN?usp=drive_link) | - |
-| Omnivore-Small | [Link](https://drive.google.com/drive/folders/1qWPKn16Rrc2-JkbEHmy57AIMGDwNocHA?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1ZdwCXLnVAXnrfRMbYzJ99w2snFn4IClY?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1X7SVSxRSCdOQRCivB8GVZmx7Q5Zef-lX?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1Y9bf9H--OsXCcCOn8bWR0P6bzBMKDEW3?usp=sharing) | [Link](https://drive.google.com/drive/folders/1c_eoEMZ3fZmb72UL8GmUJQXTMq2BQW-a?usp=drive_link) |
-| Omnivore-Base | - | - | - | [Link](https://drive.google.com/drive/folders/1CrakfWlHgHyRyN3cCBPgOmTVVRVDESiu?usp=drive_link) | - |
+| VM \ CLIP | ViT-B/16 |
+| --- | --- |
+| Omnivore-Small | [Link](https://drive.google.com/file/d/1zrx6VX_siBJuVNZty0V_OSlS_347MQf2/view?usp=sharing) |
 
 **EGTEA**
+- Few(eight)-shot Model.
 
-| VM \ CLIP | ResNet50 | ResNet101 | ViT-B/32 | ViT-B/16 | ViT-L/14 |
-| --- | --- | --- | --- | --- | --- |
-| Omnivore-Tiny | - | - | - | [Link](https://drive.google.com/drive/folders/15YqZefGH0587JSUpQdR6qhLLb7NL4czO?usp=drive_link) | - |
-| Omnivore-Small | [Link](https://drive.google.com/drive/folders/1c8bKY5jXRW1Rmmokeyu0ef2PyEwj4JDl?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1wlrcDd-_RyullPSlxlIOSdDTmKgcffsL?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1DJR1Xcjat4GiRe8Sd7oPqhiJ-mca4-hX?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1CL4cojC_SRFb6-pPdii-hhZTY6O6HA8T?usp=drive_link) | [Link](https://drive.google.com/drive/folders/1lcQfxVMp6W6SvfwqBcGG8c4Otv8BbBZB?usp=drive_link) |
-| Omnivore-Base | - | - | - | [Link](https://drive.google.com/drive/folders/1gXKrhydQ511Ly8_I8Tw2d94ziOWLcgU5?usp=drive_link) | - |
+| VM \ CLIP | ViT-B/16 |
+| --- | --- |
+| Omnivore-Small | [Link](https://drive.google.com/file/d/1r0Iayiadyx7lB_ie_VCXHnuO5i07xPs1/view?usp=sharing) |
 
 ### Acknowledgements
 
