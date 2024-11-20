@@ -43,7 +43,7 @@ MODEL:
   EVO:
     ENABLE: True
     ENC_OUT_DIM: 768
-    DEC_TYPE: "Both" # S-D, T-D, S-D_T-D_spr
+    DEC_TYPE: "Both"
     ENC_NAME: "omnivore_swinT"
     ACT: "gelu"
     BIAS: False

@@ -16,6 +16,8 @@ FRAME=$4    # number of frames (8, 16, 32, 64)
 SHOTS=$5    # number of shots (1, 2, 4, 8, 16) / full (-1)
 ENC_OUT_DIM=$6
 DECODER=$7
+LOSS=$8
+LAMBDA=$9
 TEMPORAL_AGGREGATION=$8
 
 for SEED in 1 2 3
@@ -38,6 +40,8 @@ do
         MODEL.COOP.ENABLE False \
         MODEL.EVO.ENC_OUT_DIM ${ENC_OUT_DIM} \
         MODEL.EVO.DEC_TYPE ${DECODER} \
+        MODEL.EVO.LOSS ${LOSS} \
+        MODEL.EVO.LAMBDA ${LAMBDA} \
         MODEL.TEMPORAL ${TEMPORAL_AGGREGATION} \
 
     fi

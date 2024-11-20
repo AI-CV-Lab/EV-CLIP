@@ -6,7 +6,6 @@ from dassl.data.data_manager import DataManager
 from dassl.engine.trainer import SimpleTrainer, TrainerXU
 
 import argparse
-import torch
 
 from dassl.utils import setup_logger, set_random_seed, collect_env_info
 from dassl.config import get_cfg_default

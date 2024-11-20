@@ -1,8 +1,8 @@
 DATALOADER:
   TRAIN_X:
-    BATCH_SIZE: 28
+    BATCH_SIZE: 64
   TEST:
-    BATCH_SIZE: 28
+    BATCH_SIZE: 64
   NUM_WORKERS: 16
 
 INPUT:
@@ -21,16 +21,16 @@ INPUT:
 
 OPTIM:
   NAME: "adamw"
-  LR: 2e-4
-  MAX_EPOCH: 400
+  LR: 4e-4
+  MAX_EPOCH: 500
   LR_SCHEDULER: "cosine"
   WARMUP_EPOCH: 1
   WARMUP_TYPE: "constant"
-  WARMUP_CONS_LR: "1e-5"
+  WARMUP_CONS_LR: "2e-5"
   WEIGHT_DECAY: 0.05
 
 TRAIN:
-  PRINT_FREQ: 5
+  PRINT_FREQ: 6
   VALIDATION_FREQ: 5
 
 TEST:
@@ -38,7 +38,8 @@ TEST:
   EVALUATOR: "Classification_TopK"
   SPLIT: "val"
   TOPK: 5
-  CLIP: 5
+  CLIP: 1
+  CROP: 3
 
 MODEL:
   EVO:
@@ -52,7 +53,7 @@ MODEL:
     SPATIAL_IR: True
   BACKBONE:
     IMAGE:
-      NAME: "ViT-L/14"
+      NAME: "ViT-B/16"
   TEMPORAL: "mean_pool" # mean_pool, temporal_attention
 
 DATASET:

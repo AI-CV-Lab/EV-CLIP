@@ -13,7 +13,7 @@ import torchvision.transforms as T
 
 from dassl.engine import TRAINER_REGISTRY, TrainerX
 from dassl.metrics import compute_accuracy, vn_accuracy
-from dassl.utils import load_pretrained_weights, load_checkpoint
+from dassl.utils import load_pretrained_weights, load_checkpoint, Consistency_loss
 from dassl.optim import build_optimizer, build_lr_scheduler
 
 from .prompt_generator import EVoPrompt
@@ -281,6 +281,8 @@ class CustomCLIP(nn.Module):
         self.temporal_including_dec_types = ["Context", "Both"]
         self.temporal_token_dec_types = ["Context", "Both"]
 
+        self.return_frame_tokens = cfg.MODEL.EVO.LOSS in ["Consistency_Loss"]
+
     def forward(self, video):
 
         if self.evo_enable:
@@ -314,7 +316,10 @@ class CustomCLIP(nn.Module):
         logit_scale = self.logit_scale.exp()
         logits = logit_scale * video_features @ text_features.t()
 
-        return logits
+        if self.return_frame_tokens:
+            return logits, frame_tokens
+        else:
+            return logits
 
 
 @TRAINER_REGISTRY.register()
@@ -328,6 +333,13 @@ class EVoCLIP(TrainerX):
     def build_model(self):
         cfg = self.cfg
         classnames = self.dm.dataset.classnames
+
+        self.loss_function = cfg.MODEL.EVO.LOSS
+        self.loss_lambda = cfg.MODEL.EVO.LAMBDA
+        self.return_frame_tokens = self.loss_function in ["Consistency_Loss"]
+        if self.loss_function == "Consistency_Loss":
+            print(">>> Add Consistency Loss")
+            self.loss = Consistency_loss()
 
         print(f"Loading CLIP (backbone: {cfg.MODEL.BACKBONE.IMAGE.NAME})")
         clip_model = load_clip_to_cpu(cfg, self.device)
@@ -374,6 +386,8 @@ class EVoCLIP(TrainerX):
         # nan detector
         torch.autograd.set_detect_anomaly(True)
 
+        self.including_context_prompt = cfg.MODEL.EVO.DEC_TYPE in ["Context", "Both"]
+
     def forward_backward(self, batch):
         
         image, label = self.parse_batch_train(batch)
@@ -382,19 +396,42 @@ class EVoCLIP(TrainerX):
             image = self._batch_clip_preprocessing(image)
         
         prec = self.cfg.TRAINER.EVO.PREC
-        if prec == "amp":
-            with autocast():
+
+        if self.return_frame_tokens:
+            if prec == "amp":
+                with autocast():
+                    output, frm_features = self.model(image)
+                    if self.including_context_prompt:
+                        loss = F.cross_entropy(output, label) + (self.loss_lambda*self.loss(frm_features[:, 1:]))
+                    else:
+                        loss = F.cross_entropy(output, label) + (self.loss_lambda*self.loss(frm_features))
+                self.optim.zero_grad()
+                self.scaler.scale(loss).backward()
+                self.scaler.step(self.optim)
+                self.scaler.update()
+            else:
+                output, frm_features = self.model(image)
+                if self.including_context_prompt:
+                    loss = F.cross_entropy(output, label) + (self.loss_lambda*self.loss(frm_features[:, 1:]))
+                else:
+                    loss = F.cross_entropy(output, label) + (self.loss_lambda*self.loss(frm_features))
+                loss.requires_grad_(True)
+                self.model_backward_and_update(loss)
+
+        else: # Cross Entropy Loss
+            if prec == "amp":
+                with autocast():
+                    output = self.model(image)
+                    loss = F.cross_entropy(output, label)
+                self.optim.zero_grad()
+                self.scaler.scale(loss).backward()
+                self.scaler.step(self.optim)
+                self.scaler.update()
+            else:
                 output = self.model(image)
                 loss = F.cross_entropy(output, label)
-            self.optim.zero_grad()
-            self.scaler.scale(loss).backward()
-            self.scaler.step(self.optim)
-            self.scaler.update()
-        else:
-            output = self.model(image)
-            loss = F.cross_entropy(output, label)
-            loss.requires_grad_(True)
-            self.model_backward_and_update(loss)
+                loss.requires_grad_(True)
+                self.model_backward_and_update(loss)
         
         if self.cfg.TEST.EVALUATOR in ["Classification", "Classification_TopK"]:
             loss_summary = {
