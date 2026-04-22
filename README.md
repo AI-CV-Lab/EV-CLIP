@@ -1,10 +1,36 @@
-## EVo-CLIP: External Visual-only Prompt Tuning for Video Adaptaion in VLMs
+## EV-CLIP: Efficient visual prompt adaptation for CLIP in few-shot action recognition under visual challenges
 
 ### Overview
 
 ---
 
-Description will be provided.
+![Overview](figure/overview.jpg)
+
+This repository provides the official implementation of **EV-CLIP**, an efficient visual prompt adaptation framework for CLIP in few-shot video action recognition under challenging real-world conditions.
+
+While previous CLIP-based approaches for action recognition have mainly focused on temporal modeling, they often overlook the importance of **robust spatial perception**, which becomes critical under visual challenges such as low-light environments and egocentric viewpoints. As highlighted in our paper, such conditions significantly degrade action recognition performance due to impaired visual understanding.
+
+To address this limitation, EV-CLIP introduces a **parameter-efficient and modular adaptation framework** that enhances spatial and temporal representations without modifying the frozen CLIP backbone.
+
+Our approach consists of two key visual prompts:
+
+- **Mask Prompt**  
+  Reweights pixel intensities to emphasize action-relevant regions, improving spatial perception under challenging visual conditions (e.g., low illumination, cluttered scenes).
+
+- **Context Prompt**  
+  Compresses frame-wise features into a compact representation to provide lightweight temporal modeling and capture global action dynamics.
+
+These prompts are:
+- **Plug-and-play** (no architectural modification of CLIP)
+- **Backbone-agnostic** (compatible with both CNN and Transformer encoders)
+- **Parameter-efficient** (minimal trainable parameters)
+
+Extensive experiments across five benchmark datasets demonstrate that EV-CLIP:
+- Achieves **state-of-the-art performance** among parameter-efficient methods
+- Shows strong robustness under **domain shifts** (e.g., ARID, EGTEA)
+- Maintains favorable trade-offs between **accuracy, efficiency, and scalability**
+
+This makes EV-CLIP a practical solution for real-world video understanding under limited data and resource constraints.
 
 ### Setup
 
@@ -72,7 +98,19 @@ Description will be provided.
 - **EGTEA Gaze+**
     
     [Download Link](https://cbs.ic.gatech.edu/fpv/)
+
+- **EK100**
     
+    [Download Link](https://github.com/epic-kitchens/epic-kitchens-100-annotations/blob/master/README.md#erratum)
+
+The data splits are provided in “*~/EVoCLIP/shots*”
+
+You can find the repositories of comparative methods below. We conducted our experiments following the [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP).
+
+- [ViFi-CLIP](https://github.com/muzairkhattak/ViFi-CLIP)
+- [EZ-CLIP](https://github.com/Shahzadnit/EZ-CLIP)
+- [AIM](https://github.com/taoyang1122/adapt-image-models)
+- [ST-Adapter](https://github.com/linziyi96/st-adapter)
 
 ### Train
 
@@ -232,3 +270,18 @@ Download the weights for the trained models. Each Model was trained on the first
 ---
 
 This code is based on [Dassl](https://github.com/KaiyangZhou/Dassl.pytorch).
+
+
+### Citation
+
+---
+
+If you find this work useful, please consider citing:
+
+```bibtex
+@article{jon2026evclip,
+  title={EV-CLIP: Efficient Visual Prompt Adaptation for CLIP in Few-Shot Action Recognition under Visual Challenges},
+  author={Jon, Hyo Jin and Jin, Longbin and Kim, Eun Yi},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2026}
+}
