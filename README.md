@@ -32,6 +32,8 @@ Extensive experiments across five benchmark datasets demonstrate that EV-CLIP:
 
 This makes EV-CLIP a practical solution for real-world video understanding under limited data and resource constraints.
 
+You can see the paper [here](https://arxiv.org/abs/2604.22595).
+
 ### Setup
 
 ---
@@ -280,8 +282,8 @@ If you find this work useful, please consider citing:
 
 ```bibtex
 @article{jon2026evclip,
-  title={EV-CLIP: Efficient Visual Prompt Adaptation for CLIP in Few-Shot Action Recognition under Visual Challenges},
+  title={EV-CLIP: Efficient Visual Prompt Adaptation for CLIP in Few-shot Action Recognition under Visual Challenges},
   author={Jon, Hyo Jin and Jin, Longbin and Kim, Eun Yi},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  journal={arXiv preprint arXiv:2604.22595},
   year={2026}
 }
